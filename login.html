@@ -1,0 +1,35 @@
+    <!DOCTYPE html>  
+    <html lang="zh-cn">  
+    <head>  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+    <script src="./jquery-3.3.1.js"></script>  
+    <style>  
+    body{width:960px;margin:0 auto;}  
+    ul{list-style:none;width:960px;height:300px;margin-top:100px;}  
+     .a{background-color:#0f0;width:200px;height:200px;float:left;margin:20px;}  
+     .b{background-color:#00f;width:300px;height:300px;display:none;position: absolute;color: #fff;font-size: 120px;}  
+    </style>  
+    </head>  
+    <body>     
+    <ul class="list">  
+            <li><div class="a">1</div></li>  
+            <li><div class="a">2</div></li>  
+            <li><div class="a">3</div></li>  
+         </ul>  
+            <div class="b">1-1</div>  
+            <div class="b">2-2</div>  
+            <div class="b">3-3</div>  
+    <script type="text/javascript">  
+        $('.b').hide();  
+        $('.list li').mousemove(function(e){  
+            $('.b').eq($(this).index()).show().css({  
+                "top": e.pageY+20,  
+                "left": e.pageX+20  
+            }).siblings("div").hide();  
+        });  
+        $('.list li').mouseleave(function(){  
+            $('.b').hide();  
+        });  
+    </script>  
+    </body>  
+    </html>  

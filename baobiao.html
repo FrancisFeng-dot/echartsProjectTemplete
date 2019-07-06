@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8;webkit;IE=edge,chrome=1" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no,width=device-width, maximum-scale=1" />
+    <title>报表列表</title>
+    <link rel="stylesheet" href="/css/layui.css"  media="all">
+    <style>
+        ul{padding: 0;}
+        .color_555{color: #555555;}
+        .color_999{color: #999999;}
+        .dis_block{display: block;}
+        .font_pingfang{font-family: PingFangSC-Regular;}
+        .fs_14{font-size: 1.4em;}
+        @media screen and (max-height: 686px){
+            .fs_14{font-size:1em;}
+        }
+        .fs_08{font-size: 0.8em;}
+        .fl{float:left;}
+        .fr{float:right;}
+        .fw_6{font-weight: 600;}
+        .text_center{text-align:center;}
+        .height_5v{height: 5vh;}
+        .h_18{height: 18px;}
+        .h_100{height: 100%;}
+        .lineh_25v{line-height: 2.5vh;}
+        .ml_2v{margin-left:2vw;}
+        .mr_06v{margin-right: 0.6vw;}
+        .mt_2{margin-top: 2vh;}
+        .pt_2{padding-top:2vh;}
+        .w_20{width: 20px;}
+        .w_100{width: 100%;}
+        .dataanabody{
+            background: #f3f3f3;
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            color:#333333;
+            font-size:0.8em;
+            padding: 2vh 1vw;
+            box-sizing: border-box;
+        }
+        .data_left{
+            float: left;
+            width: 14vw;
+            height: 100%;
+            margin-right: 2vw;
+            box-shadow: 0 1px 16px 0 rgba(187,187,187,0.50);
+            border-radius: 4px 4px 0 0;
+            border-top: 8px solid #8C97B2;
+            box-sizing: border-box;
+        }
+        .data_right{
+            float: left;
+            width: 82%;
+            height: 100%;
+            position:relative;
+            background:#efefef;
+        }
+        .infoboard-style{
+            width: 100%;
+            height: 37vh;
+            box-shadow: 0 1px 16px 0 rgba(187,187,187,0.50);
+            border-radius: 4px;
+            position: relative;
+        }
+        .warninglist{
+            position: absolute;
+            overflow-y: scroll;
+            height: 80vh;
+            width: 16vw;
+            top: 7vh;
+        }
+        .warninglist>li{
+            list-style:none;
+            padding: 1vh 0;
+            height: 4.8vh;
+            line-height: 2.4vh;
+        }
+        .warninglist>li:hover{
+            cursor:pointer;
+        }
+        .warninglist>li>div:nth-child(1){
+            height:15px;
+        }
+        .warninglist>li>div:nth-child(1)>img{
+            float:right;
+        }
+        .warninglist>li>div:nth-child(2){
+            display:flex;
+            flex-direction:row;
+            justify-content:space-around;
+            font-family: Helvetica;
+            color: #555555;
+        }
+        .warninglist>li>div:nth-child(2)>span:nth-child(1){
+            background: #D8D8D8;
+            border-radius: 5px;
+            font-size: 1.2em;
+            color: #FFFFFF;
+            padding: 0 7px;
+            font-weight: 600;
+            line-height:2.8vh;
+        }
+        .warninglist>li>div:nth-child(2)>span:nth-child(2){
+            font-family: PingFangSC-Regular;
+            display: block;
+            font-size: 1em;
+            color: #555555;
+        }
+        .warninglist>li>div:nth-child(2)>span:nth-child(3){
+            font-size: 1.8em;
+        }
+        .warninglist>li>div:nth-child(2)>span:nth-child(3)>span:nth-child(1){
+            font-size: 12px;
+        }
+        .dayweekmonth{
+            position: absolute;
+            bottom: 2vh;
+            left: 3vw;
+        }
+        .dayweekmonth>span{
+            font-family: PingFangSC-Regular;
+            font-size: 1.6em;
+            color: #555555;
+            display: inline-block;
+            width: 3vw;
+            height: 5vh;
+            line-height:5vh;
+            text-align: center;
+            margin-right: 2vw;
+            box-sizing: border-box;
+        }
+        .dayweekmonth>span:hover{
+            cursor: pointer;
+            border-bottom: 4px solid #F89B4D;
+        }
+        @media screen and (max-width: 1365px){
+            .dayweekmonth>span{font-size:1.2em;width:5vw;}
+        }
+        .organ{
+            font-family: PingFangSC-Regular;
+            font-size: 1.4em;
+            color: #555555;
+            float: right;
+            display: inline-block;
+        }
+        @media screen and (max-width: 1124px){
+            .organ{
+                font-family: PingFangSC-Regular;
+                font-size: 1.2em;
+                color: #555555;
+                text-align: right;
+                width:60vw;
+                display: inline-block;
+            }
+        }
+    </style>                    
+</head>
+<body class="dataanabody">
+    <div class="data_left"></div>
+    <div class="data_right">
+        <div style="height: 12vh;box-shadow: 0 0 16px 0 rgba(187,187,187,0.50);border-radius: 4px 4px 0 0;border-top: 8px solid #8C97B2;padding: 2vh 1vw;position: relative;margin-bottom: 2vh;">
+            <div style="height:3vh;line-height: 3vh;">
+                <span style="font-family: Helvetica;font-size: 1.8em;color: #252525;float: left;display: inline-block;">浙DB9569</span>
+                <p class='ems organ'>
+                    <span>所在机构:</span>
+                    <span id="dptNameSpan">深圳前海车米云图科技有限公司->中国平安->浙江平安->新昌汽运->城市公交->3路车</span>
+                </p>
+            </div>
+            <div style="" class="dayweekmonth">
+                <span>日报</span>
+                <span>周报</span>
+                <span>月报</span>
+            </div>
+            <div style="position: absolute;bottom: 3vh;right: 1vw;">
+                <div class="layui-input-inline">
+                    <input class="layui-input" id="test1" placeholder="yyyy-MM-dd" type="text" style="height: 3vh;line-height: 3vh;">
+                </div>
+            </div>
+        </div>
+        <div style="height: 77vh;">
+            <div style="width: 62vw;height: 77vh;float: left;">
+                <div style="width: 100%;height: 24vh;margin-bottom: 2vh;" id="main1"></div>
+                <div style="width: 100%;height: 24vh;margin-bottom: 2vh;" id="main2"></div>
+                <div style="width: 100%;height: 24vh;" id="main3"></div>
+            </div>
+            <div style="width: 16vw;height: 100%;float: right;">
+                <div class="infoboard-style">
+                    <div class="ml_2v height_5v lineh_25v pt_2">
+                        <div class="fl w_20 h_18 mr_06v">
+                            <img src="images/descendorder.png" alt="" class="w_100 h_100">
+                        </div>
+                        <div class="fl font_pingfang text_center">
+                            <span class="dis_block fs_14 color_555;">告警数据排行</span>
+                            <span class="dis_block fs_08 color_999;">（告警次数递增）</span>
+                        </div>
+                    </div>
+                    <ul class="warninglist">
+                        <li>
+                            <div>
+                                <img src="/images/dropindex.png" alt="">
+                            </div>
+                            <div>
+                                <span style="background: #EE6163;">1</span>
+                                <span>粤BD7989</span>
+                                <span>90<span>%</span></span>
+                            </div>
+                            <!-- <div style="width: 100%;height: 16vh;" id="warninglist1_1">
+                            </div> -->
+                            <div style="width: 100%;height: 32vh;" id="warninglist1_2">
+                            </div>
+                            <img src="/images/indexTriangle.png" alt="">
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="infoboard-style mt_2">
+                    <div class="ml_2v height_5v lineh_25v pt_2">
+                        <div class="fl w_20 h_18 mr_06v">
+                            <img src="images/ascendorder.png" alt="" class="w_100 h_100">
+                        </div>
+                        <div class="fl font_pingfang text_center">
+                            <span class="dis_block fs_14 color_555;">告警数据排行</span>
+                            <span class="dis_block fs_08 color_999;">（告警次数递减）</span>
+                        </div>
+                    </div>
+                    <ul class="warninglist">
+                        <li>
+                            <div>
+                                <span style="background: #EE6163;padding: 3px 7px;">1</span>
+                            </div>
+                            <div>
+                                <span>粤BD7989</span>
+                                <span>告警次数<span>200</span>次</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+    <script src="./echarts/echarts.min.js"></script>
+    <script src="./layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#test1'
+            });
+        });
+        var myChart1 = echarts.init(document.getElementById('main1'));
+        var myChart2 = echarts.init(document.getElementById('main2'));
+        var myChart3 = echarts.init(document.getElementById('main3'));
+        var myChart4 = echarts.init(document.getElementById('warninglist1_2'));
+
+        var option4 = {
+            color: [
+                '#9B9B9B'
+            ],
+            legend: {
+                y: 'top',
+                x: '16%',
+                itemWidth:6,
+                itemHeight:6,
+                data: [{name:'月间指数变化趋势',icon:'circle',textStyle:{fontSize:12}}],
+                textStyle: {
+                    color: '#999999',
+                    fontSize: 14
+                }
+            },
+            grid: {
+                x: '20%',
+                y: '20%',
+                x2: '15%',
+                y2: '20%'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'line'
+                },
+                padding: 10,
+                backgroundColor: '#222',
+                borderColor: '#777',
+                borderWidth: 1,
+                formatter: function(obj) {
+                    return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">12时：' + '</div>' + 'OBD次数' + '：111<br>'+ 'DDS次数' + '：222<br>'+ 'ADAS次数' + '：222<br>'
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: true,
+                name: '日',
+                nameLocation:'end',
+                nameTextStyle: {
+                    fontSize: 14
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#797979'
+                    },
+                    symbol:['none', 'arrow'],
+                    symbolOffset:[0,12]
+                },
+                axisTick:{
+                    show:false,//是否显示刻度
+                    alignWithLabel:true//刻度与标签对齐
+                },
+                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: true,
+                name: '次数',
+                nameLocation: 'end',
+                nameTextStyle: {
+                    fontSize: 14
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#797979'
+                    },
+                    symbol:['none', 'arrow'],
+                    symbolOffset:[0,12]
+                },
+                axisTick:{
+                    show:false,//是否显示刻度
+                    alignWithLabel:true//刻度与标签对齐
+                }
+            },
+            dataZoom: [{
+                type: 'inside'
+            }, {
+                type: 'slider'
+            }],
+            series: {
+                name: '月间指数变化趋势',
+                type: 'line',
+                itemStyle: {
+                    opacity: 0.8,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                },
+                data: [12, 44, 644, 688, 166, 222, 388,12, 44, 644, 688, 166, 222, 388,12, 44, 644, 688, 166, 222, 388,12, 44, 644, 688, 166, 222, 388]
+            }
+        };
+
+        var option1 = {
+            title : {
+                text:'{border|}{title|驾驶规范度}',
+                x:'left',
+                y:'top',
+                textStyle: {
+                    rich:{
+                        border:{
+                            borderWidth:4,
+                            borderColor:'#F89B4D',
+                            height:18
+                        },
+                        title:{
+                            fontFamily: 'PingFangSC-Regular',
+                            fontSize: 18,
+                            color: '#555555'
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                height:'67%',
+                left: '40%',
+                y: 'center',
+                align:'left',
+                itemGap:40,
+                itemWidth:0,
+                data:['急加速','急减速','急转弯','左车道偏离','右车道偏离'],
+                formatter: function(name){
+                    for (var i = 0;i<option1.series[0].data.length; i++) {
+                        var target;
+                        var figure;
+                        if (option1.series[0].data[i].name == name) {
+                            target = option1.series[0].data[i].value;
+                            figure = i+1;
+                        }
+                    }
+                    return '{name|'+name+'}{num'+figure+'|'+target+'}{unit|次}';
+                },
+                textStyle: {
+                    rich:{
+                        name:{
+                            fontSize: 18,
+                            color: '#555555',
+                            padding:[0,12,0,0]
+                        },
+                        unit:{
+                            fontSize: 18,
+                            color: '#555555',
+                            padding:[0,30,0,12]
+                        },
+                        num1:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#C23531',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num2:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#2F4554',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num3:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#61A0A8',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num4:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#D48265',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num5:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#91C7AE',
+                            padding:[2,8],
+                            borderRadius:6
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    name:'驾驶规范度',
+                    type:'pie',
+                    center:['28%', '50%'],
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'center',
+                            formatter:['{title|总计}','{value|150}'].join('\n'),
+                            rich:{
+                                title:{
+                                    fontFamily: 'PingFangSC-Regular',
+                                    fontSize: 14,
+                                    color: '#999999'
+                                },
+                                value:{
+                                    fontFamily: 'PingFangSC-Regular',
+                                    fontSize: 20,
+                                    color: '#555555',
+                                    lineHeight:30
+                                }
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'急加速'},
+                        {value:310, name:'急减速'},
+                        {value:234, name:'急转弯'},
+                        {value:135, name:'左车道偏离'},
+                        {value:1548, name:'右车道偏离'}
+                    ]
+                }
+            ]
+        };
+        var option2 = {
+            title : {
+                text:'{border|}{title|驾驶疲劳度}',
+                x:'left',
+                y:'top',
+                textStyle: {
+                    rich:{
+                        border:{
+                            borderWidth:4,
+                            borderColor:'#F89B4D',
+                            height:18,
+                            align:'left'
+                        },
+                        title:{
+                            fontFamily: 'PingFangSC-Regular',
+                            fontSize: 18,
+                            color: '#555555',
+                            padding:[0,0,0,12]
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                height:'67%',
+                left: '40%',
+                y: 'center',
+                align:'left',
+                itemGap:40,
+                itemWidth:0,
+                data:['侧脸','闭眼','低头','打哈欠','打电话','抽烟'],
+                formatter: function(name){
+                    for (var i = 0;i<option2.series[0].data.length; i++) {
+                        var target;
+                        var figure;
+                        if (option2.series[0].data[i].name == name) {
+                            target = option2.series[0].data[i].value;
+                            figure = i+1;
+                        }
+                    }
+                    return '{name|'+name+'}{num'+figure+'|'+target+'}{unit|次}';
+                },
+                textStyle: {
+                    rich:{
+                        name:{
+                            fontSize: 18,
+                            color: '#555555',
+                            padding:[0,12,0,0]
+                        },
+                        unit:{
+                            fontSize: 18,
+                            color: '#555555',
+                            padding:[0,30,0,12]
+                        },
+                        num1:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#C23531',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num2:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#2F4554',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num3:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#61A0A8',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num4:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#D48265',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num5:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#91C7AE',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num6:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#749F83',
+                            padding:[2,8],
+                            borderRadius:6
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    name:'驾驶疲劳度',
+                    type:'pie',
+                    center:['28%', '50%'],
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'center',
+                            formatter:['{title|总计}','{value|120}'].join('\n'),
+                            rich:{
+                                title:{
+                                    fontFamily: 'PingFangSC-Regular',
+                                    fontSize: 14,
+                                    color: '#999999'
+                                },
+                                value:{
+                                    fontFamily: 'PingFangSC-Regular',
+                                    fontSize: 20,
+                                    color: '#555555',
+                                    lineHeight:30
+                                }
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'侧脸'},
+                        {value:310, name:'闭眼'},
+                        {value:234, name:'低头'},
+                        {value:135, name:'打哈欠'},
+                        {value:1548, name:'打电话'},
+                        {value:1548, name:'抽烟'}
+                    ]
+                }
+            ]
+        };
+        var option3 = {
+            title : {
+                text:'{border|}{title|路况复杂度}',
+                x:'left',
+                y:'top',
+                textStyle: {
+                    rich:{
+                        border:{
+                            borderWidth:4,
+                            borderColor:'#F89B4D',
+                            height:18,
+                            align:'left'
+                        },
+                        title:{
+                            fontFamily: 'PingFangSC-Regular',
+                            fontSize: 18,
+                            color: '#555555',
+                            padding:[0,0,0,12]
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                height:'67%',
+                left: '40%',
+                y: 'center',
+                align:'left',
+                itemGap:40,
+                itemWidth:0,
+                data:['前车碰撞','行人预警'],
+                formatter: function(name){
+                    for (var i = 0;i<option3.series[0].data.length; i++) {
+                        var target;
+                        var figure;
+                        if (option3.series[0].data[i].name == name) {
+                            target = option3.series[0].data[i].value;
+                            figure = i+1;
+                        }
+                    }
+                    return '{name|'+name+'}{num'+figure+'|'+target+'}{unit|次}';
+                },
+                textStyle: {
+                    rich:{
+                        name:{
+                            fontSize: 18,
+                            color: '#555555',
+                            padding:[0,12,0,0]
+                        },
+                        unit:{
+                            fontSize: 18,
+                            color: '#555555',
+                            padding:[0,30,0,12]
+                        },
+                        num1:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#C23531',
+                            padding:[2,8],
+                            borderRadius:6
+                        },
+                        num2:{
+                            fontFamily: 'Helvetica',
+                            fontSize: 20,
+                            color: '#ffffff',
+                            backgroundColor:'#2F4554',
+                            padding:[2,8],
+                            borderRadius:6
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    name:'路况复杂度',
+                    type:'pie',
+                    center:['28%', '50%'],
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'center',
+                            formatter:['{title|总计}','{value|95}'].join('\n'),
+                            rich:{
+                                title:{
+                                    fontFamily: 'PingFangSC-Regular',
+                                    fontSize: 14,
+                                    color: '#999999'
+                                },
+                                value:{
+                                    fontFamily: 'PingFangSC-Regular',
+                                    fontSize: 20,
+                                    color: '#555555',
+                                    lineHeight:30
+                                }
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'前车碰撞'},
+                        {value:310, name:'行人预警'}
+                    ]
+                }
+            ]
+        };
+
+var winWidth = 0;
+var winHeight = 0;
+function findDimensions() //函数：获取尺寸
+{
+//获取窗口宽度
+if (window.innerWidth)
+winWidth = window.innerWidth;
+else if ((document.body) && (document.body.clientWidth))
+winWidth = document.body.clientWidth;
+//获取窗口高度
+if (window.innerHeight)
+winHeight = window.innerHeight;
+else if ((document.body) && (document.body.clientHeight))
+winHeight = document.body.clientHeight;
+//通过深入Document内部对body进行检测，获取窗口大小
+if (document.documentElement  && document.documentElement.clientHeight && document.documentElement.clientWidth)
+{
+winHeight = document.documentElement.clientHeight;
+winWidth = document.documentElement.clientWidth;
+}
+//结果输出至两个文本框
+option1.title.textStyle.rich.title.padding = [0,winHeight*6/100,0,winHeight*4/100];
+//document.form1.availWidth.value= winWidth;
+}
+findDimensions();
+//调用函数，获取数值
+window.onresize=findDimensions;
+
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
+        myChart3.setOption(option3);
+        myChart4.setOption(option4);
+    </script>
+</body>
+</html>
