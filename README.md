@@ -1,2 +1,2 @@
-# Echarts-project
-it`s a Echarts templete
+# 这是一个Echarts实例的集合
+<div><font size="1"><div>css文件夹里面是layui插件需要的样式库</div><div>echarts文件夹下时Echarts的api文件</div><div>font&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;layui图标库</div><div>images&nbsp; &nbsp; 存放页面的图片</div><div><br></div><div>layui.all.js&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; layui插件API文件</div><div>layui.js&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; layui插件API文件&nbsp;</div><div><br></div><div>以下html包含echarts插件的实例，其中有处理图例富文本、内容富文本的实例</div><div>baobiao.html&nbsp; &nbsp; 饼图</div><div>leida.html&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;雷达图</div><div>lineindex.html&nbsp; &nbsp;折线图\饼图\雷达图</div><div>playback.html 百度地图api的实践样例，表格和时间采用了layui插件</div><div>sameorgan.html&nbsp; &nbsp;折线图\柱状图\饼图\散点图</div></font></div>
